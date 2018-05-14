@@ -1,0 +1,33 @@
+---------------------------------------------------------------
+Dataframe is  similar to relation table in SparkSQL (spark sql dataframes)
+---------------------------------------------------------------
+In this program we have file  empleados.json in a repository hadoop with contains this data
+-----------------------------------------------------------------
+{"id" : "1201","nombre" : "Carlos", "edad" : "25"}
+{"id" : "1202","nombre" : "Luis", "edad" : "25"}
+{"id" : "1203","nombre" : "Martin", "edad" : "26"}
+{"id" : "1204","nombre" : "Jorge", "edad" : "25"}
+{"id" : "1205","nombre" : "Jose", "edad" : "27"}
+{"id" : "1206","nombre" : "Elena", "edad" : "27"}
+{"id" : "1207","nombre" : "Sandra", "edad" : "25"}
+{"id" : "1208","nombre" : "Maria", "edad" : "25"}
+{"id" : "1208","nombre" : "Elisa", "edad" : "25"}
+
+--We put a val aboout SparkContext called sqlcontext
+
+scala> val sqlcontext = new org.apache.spark.sql.SQLContext(sc)
+
+--We create another variable called dfs wich read the data
+
+scala> val dfs = sqlcontext.read.json("empleados.json")
+--In this case whe show the first five rows
+
+scala> dfs.show(5)
+--In this case whe show the structure of the table
+scala> dfs.printSchema()
+--We select the columns 
+scala> dfs.select("nombre").show()
+--We select the columns edad where is greather 25 years old
+scala> dfs.filter(dfs("edad") > 25).show()
+--We select the data group by the column edad
+scala> dfs.groupBy("edad").count().show()
